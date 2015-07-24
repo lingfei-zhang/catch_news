@@ -52,9 +52,9 @@ class TRssItemDao:
         session.close()
 
     @staticmethod
-    def queryTRssItemByLink(link):
+    def queryTRssItemByLink(link,rss_id):
         session = DBSession()
-        result = session.query(TRssItem).filter(TRssItem.link == link).first()
+        result = session.query(TRssItem).filter(TRssItem.rss_id == rss_id).filter(TRssItem.link == link).first()
         session.close()
         return result
 
