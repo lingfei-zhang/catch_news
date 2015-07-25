@@ -23,13 +23,13 @@
 <h3>不在显示列表里:</h3>
 {% for r in rss_false_list + rss_list%}
 {%if r.id ==2 or r.id ==3 or r.id ==4%}
-<div><a href="/items?rssId={{r.id}}" target="_blank">{{r.name}}</a></div>
+<div><a href="/items?rssId={{r.id}}" target="_blank" data-enabled="{{r.enabled}}">{{r.name}}</a></div>
 {%endif%}
 {%endfor%}
 <hr/>
 <h3>所有列表</h3>
 {% for r in rss_list + rss_false_list%}
-<div><a href="/items?rssId={{r.id}}" target="_blank">{{r.name}}</a></div>
+<div><a href="/items?rssId={{r.id}}" target="_blank" data-enabled="{{r.enabled}}">{{r.name}}</a></div>
 {%endfor%}
 </body>
 </html>
