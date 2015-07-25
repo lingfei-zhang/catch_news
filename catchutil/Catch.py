@@ -17,7 +17,7 @@ import json
 def get_soup_from_url(url):
     http = urllib.urlopen(url)
     content = http.read()
-    soup = BeautifulSoup(content, "lxml")
+    soup = BeautifulSoup(content, "html.parser")
     http.close()
     return soup
 
