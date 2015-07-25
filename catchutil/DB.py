@@ -25,6 +25,8 @@ class TRssItem(Base):
     link = Column(String())
     published_date = Column(String())
     created_date = Column(String())
+    def __repr__(self):
+        return self.link
 
 
 class TRssDao:
