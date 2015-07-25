@@ -62,7 +62,7 @@ class TRssItemDao:
     def queryTRssItem(**kwargs):
         result = []
         session = DBSession()
-        query = session.query(TRssItem,TRss).filter(TRssItem.rss_id == TRss.id).filter(TRssItem.rss_id != 3).filter(TRssItem.rss_id != 4)
+        query = session.query(TRssItem,TRss).filter(TRssItem.rss_id == TRss.id).filter(TRssItem.rss_id.notin_((2,3,4)))
         if kwargs.get("itemId", None):
             if kwargs.get("prev", None) != None:
                 query = query.filter(TRssItem.id > int(kwargs["itemId"][0]))
