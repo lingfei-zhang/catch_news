@@ -61,7 +61,6 @@ if __name__ == "__main__":
             for entry in entries:
                 if rss.id == 13:
                     entry["link"] = entry["link"].split("#")[0] #处理v2ex
-                    print entry["link"]
                 if not TRssItemDao.queryTRssItemByLink(entry["link"], rss.id):
                     t_rss_item = TRssItem(title=entry["title"], link=entry["link"], published_date=entry["published"],
                                           rss_id=rss.id, created_date=datetime.datetime.today())
