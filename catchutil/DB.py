@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
-engine = create_engine('sqlite:////Users/lingfeizhang/IdeaProjects/pythontest/catch_feed/db/db.sqlite' ) #echo=True
+engine = create_engine('sqlite:////Users/lingfeizhang/IdeaProjects/pythontest/catch_feed/db/db.sqlite')  # echo=True
 DBSession = sessionmaker(bind=engine)
 
 
@@ -52,7 +52,7 @@ class TRssItemDao:
         session.close()
 
     @staticmethod
-    def queryTRssItemByLink(link,rss_id):
+    def queryTRssItemByLink(link, rss_id):
         session = DBSession()
         result = session.query(TRssItem).filter(TRssItem.rss_id == rss_id).filter(TRssItem.link == link).first()
         session.close()
@@ -62,23 +62,49 @@ class TRssItemDao:
     def queryTRssItem(**kwargs):
         result = []
         session = DBSession()
-        query = session.query(TRssItem)
+        query = session.query(TRssItem).filter(TRssItem.rss_id != 3).filter(TRssItem.rss_id != 4)
         if kwargs.get("itemId", None):
             if kwargs.get("prev", None) != None:
                 query = query.filter(TRssItem.id > int(kwargs["itemId"][0]))
                 query = query.order_by(TRssItem.id.asc())
-                query=query.offset(0)
-                query=query.limit(35)
+                query = query.offset(0)
+                query = query.limit(35)
                 result = query.all()
                 result.reverse()
             if kwargs.get("next", None) != None:
                 query = query.filter(TRssItem.id < int(kwargs["itemId"][0]))
                 query = query.order_by(TRssItem.id.desc())
-                query=query.offset(0)
-                query=query.limit(35)
+                query = query.offset(0)
+                query = query.limit(35)
                 result = query.all()
         else:
             result = query.order_by(TRssItem.id.desc()).offset(0).limit(35).all()
 
         session.close()
         return result
+
+    @staticmethod
+    def queryTRssItemByRssId(**kwargs):
+        result = []
+        session = DBSession()
+        query = session.query(TRssItem).filter(TRssItem.rss_id == int(kwargs["rssId"][0]))
+        if kwargs.get("itemId", None):
+            if kwargs.get("prev", None) != None:
+                query = query.filter(TRssItem.id > int(kwargs["itemId"][0]))
+                query = query.order_by(TRssItem.id.asc())
+                query = query.offset(0)
+                query = query.limit(35)
+                result = query.all()
+                result.reverse()
+            if kwargs.get("next", None) != None:
+                query = query.filter(TRssItem.id < int(kwargs["itemId"][0]))
+                query = query.order_by(TRssItem.id.desc())
+                query = query.offset(0)
+                query = query.limit(35)
+                result = query.all()
+        else:
+            result = query.order_by(TRssItem.id.desc()).offset(0).limit(35).all()
+
+        session.close()
+        return result
+

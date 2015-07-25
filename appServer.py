@@ -14,7 +14,7 @@ def index():
 
 @app.route("/rss")
 def rss():
-    rss_list = TRssDao.listTRss()
+    rss_list = TRssDao.listTRss(True) + TRssDao.listTRss(False)
     return render_template("rss.html", rss_list=rss_list)
 
 
@@ -36,6 +36,12 @@ def add_rss():
 def read_news():
     rss_items = TRssItemDao.queryTRssItem(**request.args)
     return render_template("news.html", items=rss_items)
+
+
+@app.route("/items")
+def read_items():
+    rss_items = TRssItemDao.queryTRssItemByRssId(**request.args)
+    return render_template("items.html", items=rss_items, rss_id=request.args["rssId"])
 
 
 if __name__ == '__main__':

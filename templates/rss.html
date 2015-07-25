@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        div {
+            margin: 20px 0;
+        }
+
+        div > a{
+            font-size: 2em;
+            font-weight: bold
+        }
+    </style>
 </head>
 <body>
-{% for i in rss_list%}
-<a href=""></a> {{i.name}}
+{% for r in rss_list%}
+<div><a href="/items?rssId={{r.id}}" target="_blank">{{r.name}}</a></div>
 {%endfor%}
 </body>
 </html>
