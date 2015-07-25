@@ -14,8 +14,9 @@ def index():
 
 @app.route("/rss")
 def rss():
-    rss_list = TRssDao.listTRss(True) + TRssDao.listTRss(False)
-    return render_template("rss.html", rss_list=rss_list)
+    rss_list = TRssDao.listTRss(True)
+    rss_false_list = TRssDao.listTRss(False)
+    return render_template("rss.html", rss_list=rss_list, rss_false_list=rss_false_list)
 
 
 @app.route("/add", methods=['GET', 'POST'])

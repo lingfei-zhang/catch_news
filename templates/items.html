@@ -14,9 +14,16 @@
         div {
             margin: 20px 0;
         }
-        .item>a {
+
+        .item > a {
             font-size: 2em;
-            font-weight: bold
+            font-weight: bold;
+            text-decoration: none;
+
+        }
+
+        body {
+            background: #C7EDCC;
         }
 
 
@@ -24,14 +31,15 @@
 </head>
 <body>
 {%for item in items%}
-<div class="item"><a target="_self" href="{{item[0].link}}" data-id="{{item[0].id}}">{{item[0].title}}</a>({{item[1].name}})</div>
+<div class="item"><a target="_self" href="{{item[0].link}}" data-id="{{item[0].id}}">{{item[0].title}}</a>({{item[1].name}})
+</div>
 {%endfor%}
 <div>
-{% if items %}
+    {% if items %}
     <a href="/items?rssId={{rss_id}}&itemId={{items[0][0]['id']}}&prev">上一页</a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="/items?rssId={{rss_id}}&itemId={{items[-1][0]['id']}}&next">下一页</a>
-{%endif%}
+    {%endif%}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/news">首页</a>
 </div>
 <br/>

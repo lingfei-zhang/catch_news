@@ -8,15 +8,32 @@
             margin: 20px 0;
         }
 
-        div > a{
+        div > a {
             font-size: 2em;
-            font-weight: bold
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        body {
+            background: #C7EDCC;
         }
     </style>
 </head>
 <body>
 {% for r in rss_list%}
 <div><a href="/items?rssId={{r.id}}" target="_blank">{{r.name}}</a></div>
+{%endfor%}
+<hr/>
+<h3>不在显示列表里:</h3>
+{% for r in rss_false_list%}
+{%if r.id ==3 or r.id ==4 %}
+<div><a href="/items?rssId={{r.id}}" target="_blank">{{r.name}}</a></div>
+{%endif%}
+{%endfor%}
+<hr/>
+<h3>所有列表</h3>
+{% for r in rss_list + rss_false_list%}
+<div>{{r.name}}</div>
 {%endfor%}
 </body>
 </html>
