@@ -30,11 +30,11 @@ def catch_autohome():
                 TRssItemDao.saveTRssItem(t_rss_item)
 
 """
-抓取马蜂窝最新游记
+抓取马蜂窝精华游记
 """
 
 def catch_mafengwo():
-    urlPrefix = "http://www.mafengwo.cn/ajax/ajax_article.php?type=1&start="
+    urlPrefix = "http://www.mafengwo.cn/ajax/ajax_article.php?start="
     for pageIndex in range(1, 6)[::-1]:
         url = urlPrefix + str(pageIndex)
         http = urllib.urlopen(url)
