@@ -70,17 +70,17 @@ class TRssItemDao:
                 query = query.filter(TRssItem.id > int(kwargs["itemId"][0]))
                 query = query.order_by(TRssItem.id.asc())
                 query = query.offset(0)
-                query = query.limit(35)
+                query = query.limit(20)
                 result = query.all()
                 result.reverse()
             if kwargs.get("next", None) != None:
                 query = query.filter(TRssItem.id < int(kwargs["itemId"][0]))
                 query = query.order_by(TRssItem.id.desc())
                 query = query.offset(0)
-                query = query.limit(35)
+                query = query.limit(20)
                 result = query.all()
         else:
-            result = query.order_by(TRssItem.id.desc()).offset(0).limit(35).all()
+            result = query.order_by(TRssItem.id.desc()).offset(0).limit(20).all()
 
         session.close()
         return result
@@ -95,17 +95,17 @@ class TRssItemDao:
                 query = query.filter(TRssItem.id > int(kwargs["itemId"][0]))
                 query = query.order_by(TRssItem.id.asc())
                 query = query.offset(0)
-                query = query.limit(35)
+                query = query.limit(20)
                 result = query.all()
                 result.reverse()
             if kwargs.get("next", None) != None:
                 query = query.filter(TRssItem.id < int(kwargs["itemId"][0]))
                 query = query.order_by(TRssItem.id.desc())
                 query = query.offset(0)
-                query = query.limit(35)
+                query = query.limit(20)
                 result = query.all()
         else:
-            result = query.order_by(TRssItem.id.desc()).offset(0).limit(35).all()
+            result = query.order_by(TRssItem.id.desc()).offset(0).limit(20).all()
 
         session.close()
         return result
