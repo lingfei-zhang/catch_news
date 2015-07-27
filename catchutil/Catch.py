@@ -7,6 +7,7 @@ import datetime
 import time
 import urllib
 import json
+import emailUtil
 
 
 """
@@ -109,5 +110,6 @@ if __name__ == "__main__":
         except Exception,data:
             print(data)
             #发送邮件
+            emailUtil.EmailUtil().send_mail(data)
         time.sleep(60 * 20)
 
