@@ -15,4 +15,3 @@ class EmailUtil(object):
         server.login(email_addr, email_passwd)
         server.sendmail(email_addr, to_email_addr, msg.as_string())
         server.quit()
-    pass
