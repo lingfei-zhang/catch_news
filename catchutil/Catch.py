@@ -110,6 +110,6 @@ if __name__ == "__main__":
         except Exception,data:
             print(data)
             #发送邮件
-            emailUtil.EmailUtil().send_mail(data)
+            emailUtil.EmailUtil().send_mail(repr(data))
         time.sleep(60 * 20)
 
