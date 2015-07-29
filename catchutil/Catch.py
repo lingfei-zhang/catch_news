@@ -8,6 +8,9 @@ import time
 import urllib
 import json
 import emailUtil
+import sched
+
+schedule = sched.scheduler(time.time, time.sleep)
 
 
 """
@@ -87,29 +90,30 @@ def catch_leiphone():
                                       created_date=datetime.datetime.today())
                 TRssItemDao.saveTRssItem(t_rss_item)
 
+def catch_logic():
+    schedule.enter(60 * 20, 0, catch_logic, ())
+    try:
+        for rss in TRssDao.listTRss():
+            feed = feedparser.parse(rss.url)
+            entries = feed.entries
+            entries.reverse()
+            for entry in entries:
+                if rss.id == 13:
+                    entry["link"] = entry["link"].split("#")[0] #处理v2ex
+                if not TRssItemDao.queryTRssItemByLink(entry["link"], rss.id):
+                    t_rss_item = TRssItem(title=entry["title"], link=entry["link"], published_date=entry["published"],
+                                          rss_id=rss.id, created_date=datetime.datetime.today())
+                    TRssItemDao.saveTRssItem(t_rss_item)
+        catch_autohome()
+        catch_mafengwo()
+        catch_leiphone()
+        print("success")
+    except Exception,data:
+        print(data)
+        #发送邮件
+        emailUtil.EmailUtil().send_mail(repr(data))
 
 
 if __name__ == "__main__":
-    while True:
-        try:
-            for rss in TRssDao.listTRss():
-                feed = feedparser.parse(rss.url)
-                entries = feed.entries
-                entries.reverse()
-                for entry in entries:
-                    if rss.id == 13:
-                        entry["link"] = entry["link"].split("#")[0] #处理v2ex
-                    if not TRssItemDao.queryTRssItemByLink(entry["link"], rss.id):
-                        t_rss_item = TRssItem(title=entry["title"], link=entry["link"], published_date=entry["published"],
-                                              rss_id=rss.id, created_date=datetime.datetime.today())
-                        TRssItemDao.saveTRssItem(t_rss_item)
-            catch_autohome()
-            catch_mafengwo()
-            catch_leiphone()
-            print("success")
-        except Exception,data:
-            print(data)
-            #发送邮件
-            emailUtil.EmailUtil().send_mail(repr(data))
-        time.sleep(60 * 20)
-
+    schedule.enter(1, 0, catch_logic, ())
+    schedule.run()
