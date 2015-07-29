@@ -48,6 +48,7 @@ class TRssDao:
 class TRssItemDao:
     @staticmethod
     def saveTRssItem(t_rss_item):
+        print(t_rss_item.title)
         session = DBSession()
         session.add(t_rss_item)
         session.commit()
