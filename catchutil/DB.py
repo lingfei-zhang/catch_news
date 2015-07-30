@@ -2,6 +2,7 @@
 from sqlalchemy import Column, String, create_engine, INTEGER, BOOLEAN
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import datetime
 
 Base = declarative_base()
 engine = create_engine('sqlite:////Users/lingfeizhang/IdeaProjects/pythontest/catch_feed/db/db.sqlite')  # echo=True
@@ -48,7 +49,7 @@ class TRssDao:
 class TRssItemDao:
     @staticmethod
     def saveTRssItem(t_rss_item):
-        print t_rss_item.rss_id
+        print t_rss_item.rss_id, datetime.datetime.today()
         session = DBSession()
         session.add(t_rss_item)
         session.commit()
