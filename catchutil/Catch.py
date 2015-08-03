@@ -42,9 +42,9 @@ def catch_autohome():
         articles.reverse()
         for article in articles:
             a = bbsPrefix + article["tBBS"] + "-" + str(article["tBBSId"]) + "-" + str(article["topicId"]) + "-1.html"
-            if not TRssItemDao.queryTRssItemByLink(a, 3):
+            if not TRssItemDao.queryTRssItemByLink(a, 2):
                 t_rss_item = TRssItem(title=article["tTitle"], link=a, published_date=datetime.datetime.today(),
-                                      rss_id=3, created_date=datetime.datetime.today())
+                                      rss_id=2, created_date=datetime.datetime.today())
                 TRssItemDao.saveTRssItem(t_rss_item)
         http.close()
 
@@ -64,10 +64,10 @@ def catch_mafengwo():
         for a in links:
             tempArray = a["href"].split("\\")
             temp_link = "http://www.mafengwo.cn" + tempArray[2] + tempArray[3]
-            if not TRssItemDao.queryTRssItemByLink(temp_link, 4):
+            if not TRssItemDao.queryTRssItemByLink(temp_link, 3):
                 t_rss_item = TRssItem(title=a.text.split("\\r\\n")[0].decode("unicode_escape").strip(), link=temp_link,
                                       published_date=datetime.datetime.today(),
-                                      rss_id=4, created_date=datetime.datetime.today())
+                                      rss_id=3, created_date=datetime.datetime.today())
                 TRssItemDao.saveTRssItem(t_rss_item)
 
 
@@ -84,9 +84,9 @@ def catch_leiphone():
         links = soup.select("li.pbox.clr div.word > a")
         links.reverse()
         for a in links:
-            if not TRssItemDao.queryTRssItemByLink(a["href"], 16):
+            if not TRssItemDao.queryTRssItemByLink(a["href"], 5):
                 t_rss_item = TRssItem(title=a.div.string.strip(), link=a["href"],
-                                      published_date=datetime.datetime.today(), rss_id=16,
+                                      published_date=datetime.datetime.today(), rss_id=5,
                                       created_date=datetime.datetime.today())
                 TRssItemDao.saveTRssItem(t_rss_item)
 
@@ -98,7 +98,7 @@ def catch_logic():
             entries = feed.entries
             entries.reverse()
             for entry in entries:
-                if rss.id == 13:
+                if rss.id == 4:
                     entry["link"] = entry["link"].split("#")[0] #处理v2ex
                 if not TRssItemDao.queryTRssItemByLink(entry["link"], rss.id):
                     t_rss_item = TRssItem(title=entry["title"], link=entry["link"], published_date=entry["published"],
