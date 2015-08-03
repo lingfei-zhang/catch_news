@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from catchutil.DB import *
 from flask import request
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/')
 
 
 @app.route('/')
