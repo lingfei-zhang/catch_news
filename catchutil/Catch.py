@@ -9,9 +9,11 @@ import urllib
 import json
 import emailUtil
 import sched
+import socket
+
+socket.setdefaulttimeout(30)
 
 schedule = sched.scheduler(time.time, time.sleep)
-
 
 """
 根据url获取soup
@@ -90,6 +92,7 @@ def catch_leiphone():
                                       created_date=datetime.datetime.today())
                 TRssItemDao.saveTRssItem(t_rss_item)
 
+
 def catch_logic():
     schedule.enter(60 * 20, 0, catch_logic, ())
     try:
@@ -99,7 +102,7 @@ def catch_logic():
             entries.reverse()
             for entry in entries:
                 if rss.id == 4:
-                    entry["link"] = entry["link"].split("#")[0] #处理v2ex
+                    entry["link"] = entry["link"].split("#")[0]  # 处理v2ex
                 if not TRssItemDao.queryTRssItemByLink(entry["link"], rss.id):
                     t_rss_item = TRssItem(title=entry["title"], link=entry["link"], published_date=entry["published"],
                                           rss_id=rss.id, created_date=datetime.datetime.today())
@@ -108,9 +111,9 @@ def catch_logic():
         catch_mafengwo()
         catch_leiphone()
         print("success")
-    except Exception,data:
+    except Exception, data:
         print(data)
-        #发送邮件
+        # 发送邮件
         emailUtil.EmailUtil().send_mail(repr(data))
 
 
