@@ -109,7 +109,7 @@ def catch_logic():
                     TRssItemDao.saveTRssItem(t_rss_item)
         catch_autohome()
         catch_mafengwo()
-        catch_leiphone()
+        #catch_leiphone()
         print("success")
     except Exception, data:
         print(data)
