@@ -94,8 +94,8 @@ def catch_leiphone():
 
 
 def catch_logic():
-    schedule.enter(60 * 20, 0, catch_logic, ())
     try:
+        schedule.enter(60 * 20, 0, catch_logic, ())
         for rss in TRssDao.listTRss():
             feed = feedparser.parse(rss.url)
             entries = feed.entries
